@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contract Renewal</title>
+    <!-- Brand Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #f47c2b;
+            --primary-hover: #df6820;
+            --bg-body: #fef5ee;
+            --card-bg: #ffffff;
+            --text-main: #352117;
+            --text-muted: #7a5b4a;
+            --border-color: #f0d7c5;
+            --accent-light: #fff1e5;
+            --danger: #ef4444;
+            --success: #10b981;
+            --ring: rgba(244, 124, 43, 0.28);
+            --surface-soft: #fff9f4;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Source Sans 3', sans-serif;
+            background:
+                radial-gradient(circle at 10% 15%, rgba(244, 124, 43, 0.16), transparent 35%),
+                radial-gradient(circle at 88% 82%, rgba(255, 178, 102, 0.16), transparent 35%),
+                linear-gradient(160deg, #fff8f1 0%, #ffeede 100%);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 28px 18px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background-image: linear-gradient(90deg, rgba(128, 72, 31, 0.035) 1px, transparent 1px), linear-gradient(rgba(128, 72, 31, 0.035) 1px, transparent 1px);
+            background-size: 44px 44px;
+            mask-image: radial-gradient(circle at center, black 35%, transparent 100%);
+        }
+
+        .card {
+            background: linear-gradient(180deg, #ffffff 0%, #fffcf8 100%);
+            padding: 34px 36px;
+            border-radius: 22px;
+            max-width: 540px;
+            width: 100%;
+            box-shadow: 0 26px 48px rgba(124, 66, 32, 0.14), 0 6px 14px rgba(124, 66, 32, 0.08);
+            border: 1px solid rgba(240, 215, 197, 0.95);
+            position: relative;
+            z-index: 1;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            border-radius: 22px 22px 0 0;
+            background: linear-gradient(90deg, #f47c2b 0%, #f59d2a 55%, #ffbc57 100%);
+        }
+
+        .card-header {
+            text-align: center;
+            margin-bottom: 22px;
+        }
+
+        .card-header h2 {
+            font-family: 'Manrope', sans-serif;
+            font-size: 30px;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 8px;
+            letter-spacing: -0.03em;
+            line-height: 1.12;
+        }
+
+        .contract-info {
+            font-size: 15px;
+            line-height: 1.4;
+            color: var(--text-muted);
+            margin-bottom: 14px;
+        }
+
+        .contract-info strong {
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        .price-banner {
+            display: inline-block;
+            background: linear-gradient(135deg, #fff3e7 0%, #ffefde 100%);
+            border: 1px solid #f4ccb2;
+            padding: 10px 16px;
+            border-radius: 999px;
+            font-size: 13px;
+            color: var(--text-main);
+            margin-bottom: 14px;
+            font-weight: 500;
+        }
+
+        .price-banner strong {
+            color: var(--primary);
+            font-size: 17px;
+            font-weight: 700;
+        }
+
+        .instruction-text {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .options-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .option-card {
+            position: relative;
+        }
+
+        .option-card input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 18px;
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            cursor: pointer;
+            transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease, transform 0.2s ease;
+            background-color: var(--card-bg);
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.92);
+        }
+
+        .option-content {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+        }
+
+        .radio-custom {
+            width: 21px;
+            height: 21px;
+            border: 2px solid #dfbca8;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+            background-color: #fff;
+        }
+
+        .radio-custom::after {
+            content: '';
+            width: 10px;
+            height: 10px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            transform: scale(0);
+            transition: transform 0.2s ease;
+        }
+
+        .plan-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .plan-title {
+            font-family: 'Manrope', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .plan-subtext {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 3px;
+        }
+
+        .badge {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 5px 9px;
+            border-radius: 20px;
+            background-color: #fff1e5;
+            color: #935e3b;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            white-space: nowrap;
+        }
+
+        .option-card:hover .option-label {
+            border-color: #f4ba97;
+            background-color: var(--surface-soft);
+            transform: translateY(-1px);
+            box-shadow: 0 10px 20px rgba(126, 75, 42, 0.1);
+        }
+
+        .option-card input[type="radio"]:checked+.option-label {
+            border-color: var(--primary);
+            background-color: var(--accent-light);
+            box-shadow: 0 0 0 3px var(--ring);
+        }
+
+        .option-card input[type="radio"]:checked+.option-label .radio-custom {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(244, 124, 43, 0.16);
+        }
+
+        .option-card input[type="radio"]:checked+.option-label .radio-custom::after {
+            transform: scale(1);
+        }
+
+        .option-card input[type="radio"]:checked+.option-label .badge {
+            background-color: #ffe1cc;
+            color: #b45118;
+        }
+
+        .option-card input[type="radio"]:focus-visible+.option-label {
+            outline: 3px solid var(--ring);
+            outline-offset: 2px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(100deg, #f47c2b 0%, #f48f2b 55%, #f6ad3a 100%);
+            color: #fff;
+            border: none;
+            padding: 15px 24px;
+            border-radius: 12px;
+            cursor: pointer;
+            width: 100%;
+            font-family: 'Manrope', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            transition: transform 0.2s ease, box-shadow 0.25s ease, filter 0.25s ease;
+            box-shadow: 0 14px 24px rgba(201, 106, 39, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 18px 30px rgba(201, 106, 39, 0.35);
+            filter: brightness(1.04);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+            filter: brightness(0.98);
+        }
+
+        .btn-primary:focus-visible,
+        .btn-decline:focus-visible {
+            outline: 3px solid var(--ring);
+            outline-offset: 2px;
+        }
+
+        .btn-decline {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 14px;
+            padding: 8px;
+            border-radius: 8px;
+            transition: color 0.2s ease, background-color 0.2s ease;
+        }
+
+        .btn-decline:hover {
+            color: var(--danger);
+            background-color: #fff1f2;
+        }
+
+        .confirmation-view {
+            text-align: center;
+            padding: 8px 0;
+            display: none;
+        }
+
+        .status-icon-wrapper {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 18px auto;
+        }
+
+        .status-icon-wrapper.success {
+            background-color: #d1fae5;
+            color: var(--success);
+        }
+
+        .status-icon-wrapper.decline {
+            background-color: #fef2f2;
+            color: var(--danger);
+        }
+
+        .confirmation-view h2 {
+            font-family: 'Manrope', sans-serif;
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 10px;
+        }
+
+        .confirmation-view p {
+            font-size: 15px;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 22px;
+        }
+
+        .summary-box {
+            background-color: #fff9f3;
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 18px;
+            text-align: left;
+            margin-bottom: 10px;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95);
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            margin-bottom: 9px;
+            gap: 12px;
+        }
+
+        .summary-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .summary-row .label {
+            color: var(--text-muted);
+        }
+
+        .summary-row .value {
+            font-weight: 600;
+            color: var(--text-main);
+            text-align: right;
+        }
+
+        @media (max-width: 640px) {
+            body {
+                padding: 14px;
+            }
+
+            .card {
+                padding: 24px 18px;
+                border-radius: 18px;
+            }
+
+            .card::before {
+                border-radius: 18px 18px 0 0;
+            }
+
+            .card-header h2 {
+                font-size: 25px;
+            }
+
+            .option-label {
+                padding: 14px;
+            }
+
+            .badge {
+                font-size: 10px;
+                padding: 4px 8px;
+            }
+
+            .summary-row {
+                font-size: 13px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                transition: none !important;
+                animation: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="card">
+        <!-- FORM CONTAINER -->
+        <div id="formContainer">
+            <div class="card-header">
+                <h2>Contract Renewal Plan</h2>
+                <p class="contract-info">Renewing Contract: <strong id="displayContractName">Your Contract</strong></p>
+
+                <div class="price-banner" id="priceBanner" style="display: none;">
+                    Base Rate: <strong id="displayPrice">$0</strong> / month
+                </div>
+
+                <p class="instruction-text">Please select your preferred renewal plan below.</p>
+            </div>
+
+            <form id="renewalForm" onSubmit="handleFormSubmit(event)">
+                <input type="hidden" id="QBPOCNumber" name="QBPOCNumber" value="" />
+                <input type="hidden" id="RenewalAction" name="RenewalAction" value="RENEW" />
+
+                <div class="options-group">
+                    <!-- 6-Month Option -->
+                    <div class="option-card">
+                        <input type="radio" name="QBPOCContractTenure" id="t6" value="6">
+                        <label for="t6" class="option-label">
+                            <div class="option-content">
+                                <span class="radio-custom"></span>
+                                <div class="plan-details">
+                                    <span class="plan-title">6-Month Plan</span>
+                                    <span class="plan-subtext" id="subtext-t6">6 Months</span>
+                                </div>
+                            </div>
+                            <span class="badge">SHORT TERM</span>
+                        </label>
+                    </div>
+
+                    <!-- 1-Year Option (Default Checked) -->
+                    <div class="option-card">
+                        <input type="radio" name="QBPOCContractTenure" id="t12" value="12" checked>
+                        <label for="t12" class="option-label">
+                            <div class="option-content">
+                                <span class="radio-custom"></span>
+                                <div class="plan-details">
+                                    <span class="plan-title">1-Year Plan</span>
+                                    <span class="plan-subtext" id="subtext-t12">12 Months</span>
+                                </div>
+                            </div>
+                            <span class="badge">STANDARD</span>
+                        </label>
+                    </div>
+
+                    <!-- 2-Year Option -->
+                    <div class="option-card">
+                        <input type="radio" name="QBPOCContractTenure" id="t24" value="24">
+                        <label for="t24" class="option-label">
+                            <div class="option-content">
+                                <span class="radio-custom"></span>
+                                <div class="plan-details">
+                                    <span class="plan-title">2-Year Plan</span>
+                                    <span class="plan-subtext" id="subtext-t24">24 Months</span>
+                                </div>
+                            </div>
+                            <span class="badge">POPULAR</span>
+                        </label>
+                    </div>
+
+                    <!-- 3-Year Option -->
+                    <div class="option-card">
+                        <input type="radio" name="QBPOCContractTenure" id="t36" value="36">
+                        <label for="t36" class="option-label">
+                            <div class="option-content">
+                                <span class="radio-custom"></span>
+                                <div class="plan-details">
+                                    <span class="plan-title">3-Year Plan</span>
+                                    <span class="plan-subtext" id="subtext-t36">36 Months</span>
+                                </div>
+                            </div>
+                            <span class="badge">BEST VALUE</span>
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-primary" id="btnSubmit">Submit Renewal Plan</button>
+                <button type="button" class="btn-decline" onclick="handleDecline()">Decline Renewal</button>
+            </form>
+        </div>
+
+        <!-- CONFIRMATION / THANK YOU CONTAINER -->
+        <div id="confirmationContainer" class="confirmation-view">
+            <div id="statusIcon" class="status-icon-wrapper"></div>
+            
+            <h2 id="confirmationTitle">Thank You!</h2>
+            <p id="confirmationMessage">Your submission has been received.</p>
+
+            <div class="summary-box">
+                <div class="summary-row">
+                    <span class="label">Contract Number:</span>
+                    <span class="value" id="summaryContractNum">-</span>
+                </div>
+                <div class="summary-row">
+                    <span class="label">Selection Outcome:</span>
+                    <span class="value" id="summaryOutcome">-</span>
+                </div>
+                <div class="summary-row">
+                    <span class="label">Date:</span>
+                    <span class="value" id="summaryDate">-</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CREATIO SCRIPTS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://webtracking-v01.bpmonline.com/JS/track-cookies.js"></script>
+    <script src="https://webtracking-v01.creatio.com/JS/create-object.js"></script>
+    <script>
+        var config = {
+            fields: {
+                "Number": "#QBPOCNumber",
+                "Notes": "#RenewalAction"
+            },
+            landingId: "f2c31c70-baa9-426f-ad43-e8d5a934fd5d",
+            serviceUrl: "https://187975-crm-bundle.creatio.com/0/ServiceModel/GeneratedObjectWebFormService.svc/SaveWebFormObjectData",
+            redirectUrl: ""
+        };
+
+        function handleDecline() {
+            if (confirm("Are you sure you want to decline contract renewal?")) {
+                document.getElementById('RenewalAction').value = "0";
+                executeSubmission();
+            }
+        }
+
+        function handleFormSubmit(event) {
+            if (event) event.preventDefault();
+            var selectedRadio = document.querySelector("input[name='QBPOCContractTenure']:checked");
+            if (selectedRadio) {
+                document.getElementById('RenewalAction').value = selectedRadio.value;
+            }
+            executeSubmission();
+        }
+
+        function executeSubmission() {
+            var actionVal = document.getElementById('RenewalAction').value;
+            var contractNum = document.getElementById('QBPOCNumber').value || 'N/A';
+
+            try {
+                landing.createObjectFromLanding(config);
+            } catch (err) {
+                console.log("Creatio trigger:", err);
+            }
+
+            document.getElementById('formContainer').style.display = 'none';
+            document.getElementById('confirmationContainer').style.display = 'block';
+
+            document.getElementById('summaryContractNum').textContent = contractNum;
+            document.getElementById('summaryDate').textContent = new Date().toLocaleDateString();
+
+            var iconContainer = document.getElementById('statusIcon');
+            if (actionVal === "0" || actionVal === "DECLINE") {
+                iconContainer.className = "status-icon-wrapper decline";
+                iconContainer.innerHTML = '<svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>';
+                
+                document.getElementById('confirmationTitle').textContent = "Renewal Declined";
+                document.getElementById('confirmationMessage').textContent = "We've recorded your choice to decline renewal for this contract. An account representative will reach out shortly to assist with offboarding.";
+                document.getElementById('summaryOutcome').textContent = "Declined";
+                document.getElementById('summaryOutcome').style.color = "var(--danger)";
+            } else {
+                iconContainer.className = "status-icon-wrapper success";
+                iconContainer.innerHTML = '<svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path></svg>';
+                
+                document.getElementById('confirmationTitle').textContent = "Thank You!";
+                document.getElementById('confirmationMessage').textContent = "Your contract renewal plan has been successfully processed. Our team is finalizing your contract updates in Creatio.";
+                
+                // Smart label formatting for 6 Months vs Years
+                var months = parseInt(actionVal);
+                var outcomeLabel = (months < 12) ? (months + " Months Renewal") : ((months / 12) + "-Year Renewal (" + months + " Mos)");
+                
+                document.getElementById('summaryOutcome').textContent = outcomeLabel;
+                document.getElementById('summaryOutcome').style.color = "var(--success)";
+            }
+        }
+
+        function initLanding() {
+            landing.initLanding(config);
+
+            var urlParams = new URLSearchParams(window.location.search);
+            var targetValue = urlParams.get('contractNum');
+            var contractName = urlParams.get('contractName');
+            var priceParam = urlParams.get('price');
+
+            if (targetValue) {
+                document.getElementById('QBPOCNumber').value = targetValue;
+            }
+
+            var nameDisplay = document.getElementById('displayContractName');
+            if (nameDisplay) {
+                if (contractName && targetValue) {
+                    nameDisplay.textContent = decodeURIComponent(contractName) + " (" + targetValue + ")";
+                } else if (contractName) {
+                    nameDisplay.textContent = decodeURIComponent(contractName);
+                } else if (targetValue) {
+                    nameDisplay.textContent = targetValue;
+                }
+            }
+
+            // Calculation Logic based on Monthly Base Price
+            if (priceParam && !isNaN(priceParam)) {
+                var monthlyPrice = parseFloat(priceParam);
+
+                document.getElementById('priceBanner').style.display = 'inline-block';
+                document.getElementById('displayPrice').textContent = '$' + monthlyPrice.toLocaleString();
+
+                // Calculate Totals based on monthly input
+                document.getElementById('subtext-t6').textContent = '$' + (monthlyPrice * 6).toLocaleString() + ' total ($' + monthlyPrice + '/mo)';
+                document.getElementById('subtext-t12').textContent = '$' + (monthlyPrice * 12).toLocaleString() + ' total ($' + monthlyPrice + '/mo)';
+                document.getElementById('subtext-t24').textContent = '$' + (monthlyPrice * 24).toLocaleString() + ' total ($' + monthlyPrice + '/mo)';
+                document.getElementById('subtext-t36').textContent = '$' + (monthlyPrice * 36).toLocaleString() + ' total ($' + monthlyPrice + '/mo)';
+            }
+        }
+
+        jQuery(document).ready(initLanding);
+    </script>
+
+</body>
+
+</html>
